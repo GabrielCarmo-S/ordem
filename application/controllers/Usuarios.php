@@ -40,6 +40,63 @@
 
 		}
 
+		public function add(){
+
+			$this->form_validation->set_rules('first_name','','trim|required');
+			$this->form_validation->set_rules('last_name','','trim|required');
+			$this->form_validation->set_rules('email','','trim|required|valid_email|is_unique[users.email]');
+			$this->form_validation->set_rules('username','','trim|required|is_unique[users.username]');
+			$this->form_validation->set_rules('password','Senha','required|min_length[5]|max_length[255]');
+			$this->form_validation->set_rules('confirm_password','Confirma','matches[password]');
+
+			if ($this->form_validation->run()) {
+
+			    $username = $this->security->xss_clean($this->input->post('username'));
+			    $password = $this->security->xss_clean($this->input->post('password'));
+			    $email = $this->security->xss_clean($this->input->post('email'));
+			    $additional_data = array(
+                'first_name' => $this->input->post('first_name'),
+                'username' => $this->input->post('username'),
+                'last_name' => $this->input->post('last_name'),
+                'active' => $this->input->post('active'),
+
+                );
+
+                $group = array($this->input->post('perfil_usuario'));
+
+                $additional_data = $this->security->xss_clean($additional_data);
+
+                $group = $this->security->xss_clean($group);
+
+                if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
+                
+                	$this->session->set_flashdata('sucesso', 'Dados Salvos');
+
+                } else {
+
+                	$this->session->set_flashdata('error', 'Erro ao salvar');
+
+                }
+
+                redirect('usuarios');
+
+			} else {
+
+				$data = array(
+
+					'titulo' => 'Cadastrar Usuários',
+
+				);
+
+
+				$this->load->view('layout/header', $data);
+				$this->load->view('usuarios/add');
+				$this->load->view('layout/footer');
+
+			}
+
+		}
+
 		public function edit($usuario_id = NULL){
 
 			if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
@@ -111,13 +168,45 @@
 						'perfil_usuario' => $this->ion_auth->get_users_groups($usuario_id)->row(),
 					);
 
-
-
 				}
 
 				$this->load->view('layout/header', $data);
 				$this->load->view('usuarios/edit');
 				$this->load->view('layout/footer');
+
+			}
+
+		}
+
+		public function del($usuario_id = NULL){
+
+			if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
+
+				$this->session->set_flashdata('error', 'Usuário não encontrado');
+
+				redirect('usuarios');
+
+			}
+
+			if($this->ion_auth->is_admin($usuario_id)){
+
+				$this->session->set_flashdata('error', 'O administrador não pode ser excluido');
+
+				redirect('usuarios');
+
+			}
+
+			if($this->ion_auth->delete_user($usuario_id)){
+
+				$this->session->set_flashdata('sucesso', 'Usuário Exluido');
+
+				redirect('usuarios');
+
+			} else {
+
+				$this->session->set_flashdata('error', 'Usuário não encontrado');
+
+				redirect('usuarios');
 
 			}
 
