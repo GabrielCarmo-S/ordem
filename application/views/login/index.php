@@ -52,8 +52,6 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button>
-          
-                    </a>
                   </form>
                 </div>
               </div>
