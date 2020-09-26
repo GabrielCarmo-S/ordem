@@ -73,7 +73,7 @@
                       <td><?php echo ($cliente->cliente_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning">Não</span>')?></td>
                       <td class="text-right">
                           <a href="<?php echo base_url('clientes/edit/'.$cliente->cliente_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
-                          <a href="javascript(void)" data-toggle="modal" data-target="#cliente-<?php echo $cliente->cliente_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Escluir</a>
+                          <a href="javascript(void)" data-toggle="modal" data-target="#cliente-<?php echo $cliente->cliente_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
                       </td>
                     </tr>
 
@@ -89,7 +89,7 @@
                           <div class="modal-body">Para excluir o registro clique em "SIM"</div>
                           <div class="modal-footer">
                             <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Não</button>
-                            <a class="btn btn-primary btn-sm" href="<?php echo base_url('cliente/del/'.$clientes->cliente_id); ?>">Sim</a>
+                            <a class="btn btn-primary btn-sm" href="<?php echo base_url('clientes/del/'.$cliente->cliente_id); ?>">Sim</a>
                           </div>
                         </div>
                       </div>
