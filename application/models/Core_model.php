@@ -88,7 +88,7 @@ class Core_model extends CI_Model{
 
 		$this->db->db_debug = false;
 
-		if ($tabela && is_array($data)) {
+		if ($tabela && is_array($condicao)) {
 			
 			$status = $this->db->delete($tabela, $condicao);
 

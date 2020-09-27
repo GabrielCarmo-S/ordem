@@ -434,7 +434,7 @@
 	    		 
 	    	} else {
 	    		$this->core_model->delete('clientes', array('cliente_id' => $cliente_id));
-	    		     $this->session->set_flashdata('sucess', 'Cliente excluido com sucesso');
+	    		     $this->session->set_flashdata('sucesso', 'Cliente excluido com sucesso');
 	    		redirect('clientes');
 	    	}
 
