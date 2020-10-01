@@ -20,7 +20,7 @@ class Categorias extends CI_Controller{
 
 		$data = array(
 
-			'titulo' => 'categorias Cadastrados', 
+			'titulo' => 'Categorias Cadastrados', 
 
 			'styles' => array(
 

@@ -30,7 +30,7 @@
                <?php echo form_error('categoria_nome', '<small class="form-text text-danger">','</small>'); ?>
              </div>
              <div class="col-md-4">
-                 <label>categoria Ativa:</label>
+                 <label>Categoria Ativa:</label>
                  <select name="categoria_ativo" class="form-control">
                    <option value="0">Não</option>
                    <option value="1">Sim</option>
