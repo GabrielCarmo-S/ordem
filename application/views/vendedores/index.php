@@ -1,5 +1,4 @@
 
-
 <?php $this->load->view('layout/sidebar'); ?>
 
 
@@ -48,7 +47,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <a href="<?php echo base_url('fornecedores/add'); ?>" class="btn btn-success btn-sm float-right"><i class="fas fa-user-tag"></i>&nbsp;Novo</a>
+        <a href="<?php echo base_url('vendedores/add'); ?>" class="btn btn-success btn-sm float-right"><i class="fas fa-user-secret"></i>&nbsp;Novo</a>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -56,30 +55,30 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nome Fantasia</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
+                <th>Nome Completo</th>
+                <th>Matricula</th>
+                <th>Celular</th>
                 <th>Email</th>
                 <th>Ativo</th>
                 <th class="no-sort">Ações</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($fornecedores as $fornecedor): ?>
+              <?php foreach ($vendedores as $vendedor): ?>
                 <tr>
-                  <td><?php echo $fornecedor->fornecedor_id ?></td>
-                  <td><?php echo $fornecedor->fornecedor_nome_fantasia ?></td>
-                  <td><?php echo $fornecedor->fornecedor_cnpj ?></td>
-                  <td><?php echo $fornecedor->fornecedor_telefone ?></td>
-                  <td><?php echo $fornecedor->fornecedor_email ?></td>
-                  <td><?php echo ($fornecedor->fornecedor_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning">Não</span>')?></td>
+                  <td><?php echo $vendedor->vendedor_id ?></td>
+                  <td><?php echo $vendedor->vendedor_nome_completo ?></td>
+                  <td><?php echo $vendedor->vendedor_codigo ?></td>
+                  <td><?php echo $vendedor->vendedor_celular ?></td>
+                  <td><?php echo $vendedor->vendedor_email ?></td>
+                  <td><?php echo ($vendedor->vendedor_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning">Não</span>')?></td>
                   <td class="text-right">
-                    <a href="<?php echo base_url('fornecedores/edit/'.$fornecedor->fornecedor_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
-                    <a href="javascript(void)" data-toggle="modal" data-target="#fornecedor-<?php echo $fornecedor->fornecedor_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
+                    <a href="<?php echo base_url('vendedores/edit/'.$vendedor->vendedor_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
+                    <a href="javascript(void)" data-toggle="modal" data-target="#vendedor-<?php echo $vendedor->vendedor_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
                   </td>
                 </tr>
 
-                <div class="modal fade" id="fornecedor-<?php echo $fornecedor->fornecedor_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="vendedor-<?php echo $vendedor->vendedor_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -91,7 +90,7 @@
                       <div class="modal-body">Para excluir o registro clique em "SIM"</div>
                       <div class="modal-footer">
                         <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Não</button>
-                        <a class="btn btn-primary btn-sm" href="<?php echo base_url('fornecedores/del/'.$fornecedor->fornecedor_id); ?>">Sim</a>
+                        <a class="btn btn-primary btn-sm" href="<?php echo base_url('vendedores/del/'.$vendedor->vendedor_id); ?>">Sim</a>
                       </div>
                     </div>
                   </div>

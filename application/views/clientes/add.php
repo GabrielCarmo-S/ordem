@@ -144,7 +144,7 @@
                     </div>
                     <div class="col-md-8">
                       <label>Observações:</label>
-                      <textarea class="form-control" name="cliente_obs" placeholder="Observações:" value=""></textarea>
+                      <textarea class="form-control" name="cliente_obs" placeholder="Observações:" value=""><?php echo set_value ('cliente_obs'); ?></textarea>
                        <?php echo form_error('cliente_obs', '<small class="form-text text-danger">','</small>'); ?>
                     </div>
                   </div>

@@ -76,11 +76,11 @@ class Core_model extends CI_Model{
 
 			}	
 
-	    } else {
+		} else {
 
-	    	return FALSE;
+			return FALSE;
 
-	    }
+		}
 
 	}
 
@@ -122,10 +122,21 @@ class Core_model extends CI_Model{
 
 	}
 
+	public function generate_unique_code($table = NULL, $type_of_code = NULL, $size_of_code, $field_search) {
+
+		do {
+			$code = random_string($type_of_code, $size_of_code);
+			$this->db->where($field_search, $code);
+			$this->db->from($table);
+		} while ($this->db->count_all_results() >= 1);
+
+		return $code;
+	}
+
 
 
 }
 
 
 
- ?>
+?>
