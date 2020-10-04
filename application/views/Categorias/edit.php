@@ -27,12 +27,12 @@
 
             <div class="form-group row">
               <div class="col-md-8">
-               <label>categoria Nome:</label>
+               <label>Categoria Nome:</label>
                <input type="text" class="form-control" name="categoria_nome" placeholder="categoria Nome" value="<?php echo $categoria->categoria_nome; ?>">
                <?php echo form_error('categoria_nome', '<small class="form-text text-danger">','</small>'); ?>
              </div>
              <div class="col-md-4">
-                 <label>categoria Ativa:</label>
+                 <label>Categoria Ativa:</label>
                  <select name="categoria_ativo" class="form-control">
                    <option value="0" <?php echo ($categoria->categoria_ativa == 0 ? 'selected' : ''); ?>>Não</option>
                    <option value="1" <?php echo ($categoria->categoria_ativa == 1 ? 'selected' : ''); ?>>Sim</option>

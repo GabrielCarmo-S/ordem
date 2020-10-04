@@ -31,7 +31,7 @@
              </div>
              <div class="col-md-4">
                  <label>Marca Ativa:</label>
-                 <select name="marca_ativo" class="form-control">
+                 <select name="marca_ativa" class="form-control">
                    <option value="0">Não</option>
                    <option value="1">Sim</option>
                  </select>

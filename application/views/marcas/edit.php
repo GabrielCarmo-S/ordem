@@ -33,7 +33,7 @@
              </div>
              <div class="col-md-4">
                  <label>Marca Ativa:</label>
-                 <select name="marca_ativo" class="form-control">
+                 <select name="marca_ativa" class="form-control">
                    <option value="0" <?php echo ($marca->marca_ativa == 0 ? 'selected' : ''); ?>>Não</option>
                    <option value="1" <?php echo ($marca->marca_ativa == 1 ? 'selected' : ''); ?>>Sim</option>
                  </select>

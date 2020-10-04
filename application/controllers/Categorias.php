@@ -103,7 +103,7 @@ class Categorias extends CI_Controller{
 
 		if (!$categoria_id || !$this->core_model->get_by_id('categorias', array('categoria_id' => $categoria_id))) {
 				
-			$this->session->set_flashdata('error', 'categoria não encontrado');
+			$this->session->set_flashdata('error', 'Categoria não encontrada');
 				redirect('categorias');
 
 		} else {

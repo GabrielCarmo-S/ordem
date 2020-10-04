@@ -103,7 +103,7 @@ class Marcas extends CI_Controller{
 
 		if (!$marca_id || !$this->core_model->get_by_id('marcas', array('marca_id' => $marca_id))) {
 				
-			$this->session->set_flashdata('error', 'marca não encontrado');
+			$this->session->set_flashdata('error', 'Marca não encontrada');
 				redirect('marcas');
 
 		} else {
