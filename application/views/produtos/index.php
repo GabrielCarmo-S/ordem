@@ -77,8 +77,8 @@
                   <td><?php echo $produto->produto_qtde_estoque ?></td>
                   <td><?php echo ($produto->produto_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning">Não</span>')?></td>
                   <td class="text-right">
-                    <a href="<?php echo base_url('produtos/edit/'.$produto->produto_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i>&nbsp;Editar</a>
-                    <a href="javascript(void)" data-toggle="modal" data-target="#produto-<?php echo $produto->produto_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i>&nbsp;Excluir</a>
+                    <a href="<?php echo base_url('produtos/edit/'.$produto->produto_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbsp;Editar</a>
+                    <a href="javascript(void)" data-toggle="modal" data-target="#produto-<?php echo $produto->produto_id; ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i>&nbsp;Excluir</a>
                   </td>
                 </tr>
 

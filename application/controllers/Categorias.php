@@ -111,7 +111,7 @@ class Categorias extends CI_Controller{
 			$this->form_validation->set_rules('categoria_nome','','trim|required|min_length[4]|max_length[45]|callback_check_categoria_nome');
 
 			if ($this->form_validation->run()) {
-
+				
 				$data = elements(
 
 					array(
