@@ -49,6 +49,19 @@
     </div>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="true" aria-controls="collapseTwo3">
+      <i class="fas fa-file-invoice-dollar"></i>
+      <span>Financeiro</span>
+    </a>
+    <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo3" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Escolha uma opção:</h6>
+        <a class="collapse-item" href="<?php echo base_url('pagar'); ?>"><i class="fas fa-money-bill-alt text-gray-900"></i>&nbsp;&nbsp;&nbsp;Contas </a>
+      </div>
+    </div>
+  </li>
+
 
   <!-- Divider -->
   <hr class="sidebar-divider">
