@@ -60,11 +60,12 @@ class Produtos extends CI_Controller{
 		} else {
 
 			$this->form_validation->set_rules('produto_descricao','','trim|required|min_length[5]|max_length[145]|callback_check_produto_descricao');
-			$this->form_validation->set_rules('last_name','','trim|required');
-			$this->form_validation->set_rules('email','','trim|required|callback_email_check');
-			$this->form_validation->set_rules('username','','trim|required|callback_username_check');
-			$this->form_validation->set_rules('password','Senha','min_length[5]|max_length[255]');
-			$this->form_validation->set_rules('confirm_password','Confirma','matches[password]');
+			$this->form_validation->set_rules('produto_unidade','unidade','trim|required|min_length[2]|max_length[5]');
+			$this->form_validation->set_rules('produto_preco_custo','Preço de custo','trim|required|max_length[45]');
+			$this->form_validation->set_rules('produto_preco_venda','Preço de venda','trim|required|max_length[45]|callback_check_produto_preco_venda');
+			$this->form_validation->set_rules('produto_estoque_minimo','Estoque Minimo','trim|greater_than_equal_to[0]');
+			$this->form_validation->set_rules('produto_qtde_estoque','Quantidade Estoque','trim|required');
+			$this->form_validation->set_rules('produto_obs','Estoque Minimo','trim|max_length[200]');
 
 			if ($this->form_validation->run()) {
 
@@ -72,16 +73,26 @@ class Produtos extends CI_Controller{
 
 					array(
 
-						'first_name',
-						'last_name',
-						'email',
-						'username',
-						'active',
-						'password'
+						'produto_codigo',
+						'produto_categoria_id',
+						'produto_marca_id',
+						'produto_fornecedor_id',
+						'produto_descricao',
+						'produto_unidade',
+						'produto_preco_custo',
+						'produto_preco_venda',
+						'produto_estoque_minimo',
+						'produto_qtde_estoque',
+						'produto_ativo',
+						'produto_obs',
 
 					), $this->input->post()
 
 				);
+
+				$data = html_escape($data);
+				
+				$this->core_model->update('produtos', $data, array('produto_id' => $produto_id));
 
 				redirect('produtos');	
 
@@ -121,9 +132,26 @@ class Produtos extends CI_Controller{
 	public function check_produto_descricao($produto_descrica){
 		$produto_id = $this->input->post('produto_id');
 
-		if($this->core_model->get_by_id('produtos', array('produto_descrica' => $produto_descrica, 'produto_id != ' => $produto_id))){
+		if($this->core_model->get_by_id('produtos', array('produto_descricao' => $produto_descrica, 'produto_id != ' => $produto_id))){
 			$this->form_validation->set_message('check_produto_descricao', 'Este produto já existe');
 			return FALSE;
+		} else {
+			return TRUE;
+		}
+
+	}
+
+	public function check_produto_preco_venda($produto_preco_venda){
+
+		$produto_preco_custo = $this->input->post('produto_preco_custo');
+
+		if($produto_preco_custo > $produto_preco_venda){
+
+			$this->form_validation->set_message('check_produto_preco_venda', 'Preço de venda deve ser maior');
+
+			return FALSE;
+
+
 		} else {
 			return TRUE;
 		}
