@@ -28,7 +28,7 @@
                <label>Fornecedores:</label>
                <select class="form-control" name="produto_fornecedor_id">
                 <?php foreach ($fornecedores as $fornecedor): ?>
-                  <option value="<?php echo $fornecedor->fornecedor_id ?>"><?php echo $fornecedor->fornecedor_nome_fantasia; ?></option>
+                  <option value="<?php echo $fornecedor->fornecedor_id ?>"><?php echo $fornecedor->fornecedor_nome_fantasia ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
@@ -57,7 +57,6 @@
             <div class="col-md-12">
               <label>Observações:</label>
               <textarea class="form-control" name="conta_pagar_obs" placeholder="Observações:"><?php echo set_value('conta_pagar_obs'); ?></textarea>
-              <?php echo form_error('conta_pagar_obs', '<small class="form-text text-danger">','</small>'); ?>
             </div>
           </div>
         </fieldset>   
