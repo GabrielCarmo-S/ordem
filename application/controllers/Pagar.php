@@ -155,10 +155,6 @@ class Pagar extends CI_Controller{
 
 				$data = html_escape($data);
 
-				echo '<pre>';
-				print_r($data);
-				exit();
-				
 				$this->core_model->insert('contas_pagar', $data);
 
 				redirect('pagar');	

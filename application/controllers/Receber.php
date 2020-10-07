@@ -86,6 +86,8 @@ class Receber extends CI_Controller{
 					$data['conta_receber_data_pagamento'] == date('Y-m-d h:i:s');
 				}
 
+
+
 				$data = html_escape($data);
 				
 				$this->core_model->update('contas_receber', $data, array('conta_receber_id' => $conta_receber_id));
@@ -125,7 +127,7 @@ class Receber extends CI_Controller{
 
 	public function add(){
 
-		$this->form_validation->set_rules('conta_receber_fornecedor_id','','required');
+		$this->form_validation->set_rules('conta_receber_cliente_id','','required');
 			$this->form_validation->set_rules('conta_receber_data_vencto','','required');
 			$this->form_validation->set_rules('conta_receber_valor','','required');
 			$this->form_validation->set_rules('conta_receber_obs','','max_length[145]');
@@ -136,7 +138,7 @@ class Receber extends CI_Controller{
 
 					array(
 
-						'conta_receber_fornecedor_id',
+						'conta_receber_cliente_id',
 						'conta_receber_data_vencto',
 						'conta_receber_valor',
 						'conta_receber_status',
@@ -152,6 +154,7 @@ class Receber extends CI_Controller{
 					$data['conta_receber_data_pagamento'] == date('Y-m-d h:i:s');
 				}
 
+
 				$data = html_escape($data);
 				
 				$this->core_model->insert('contas_receber', $data);
@@ -162,7 +165,7 @@ class Receber extends CI_Controller{
 
 				$data = array(
 
-					'titulo' => 'Cadastrar Pagamentos', 
+					'titulo' => 'Atualizar Pagamentos', 
 
 					'styles' => array('vendor/select2/select2.min.css'),
 
@@ -178,8 +181,7 @@ class Receber extends CI_Controller{
 
 				$this->load->view('layout/footer');
 
-
-		}
+			}	
 
 	}
 

@@ -26,7 +26,7 @@
             <div class="form-group row">
               <div class="col-md-3">
                <label>Fornecedores:</label>
-               <select class="form-control" name="produto_fornecedor_id">
+               <select class="form-control" name="conta_pagar_fornecedor_id">
                 <?php foreach ($fornecedores as $fornecedor): ?>
                   <option value="<?php echo $fornecedor->fornecedor_id ?>"><?php echo $fornecedor->fornecedor_nome_fantasia ?></option>
                 <?php endforeach; ?>

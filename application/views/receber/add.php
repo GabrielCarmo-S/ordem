@@ -28,9 +28,8 @@
                <label>Clientes:</label>
                <select class="form-control" name="conta_receber_cliente_id">
                 <?php foreach ($clientes as $cliente): ?>
-                  <option value="<?php echo $cliente->cliente_id ?>"><?php echo $cliente->cliente_nome ?> </option>
+                  <option value="<?php echo $cliente->cliente_id ?>"> <?php echo $cliente->cliente_nome  ?></option>
                 <?php endforeach; ?>
-                <?php echo form_error('conta_receber_fornecedor_id', '<small class="form-text text-danger">','</small>'); ?>
               </select>
             </div>
 
@@ -57,8 +56,8 @@
           <div class="form-group row">
             <div class="col-md-12">
               <label>Observações:</label>
-              <textarea class="form-control" name="conta_receber_obs" placeholder="Observações:" value=""><?php echo set_value('conta_receber_obs'); ?></textarea>
-              <?php echo form_error('conta_receber_obs', '<small class="form-text text-danger">','</small>'); ?>
+              <textarea class="form-control" name="conta_receber_obs" placeholder="Observações:"><?php echo set_value('conta_receber_obs'); ?></textarea>
+
             </div>
           </div>
         </fieldset>
@@ -72,5 +71,4 @@
 </div>
 <!-- /.container-fluid -->
 </div>
-<!-- End of Main Content -->
-
+<!-- End of Main Conten
