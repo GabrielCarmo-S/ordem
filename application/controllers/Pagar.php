@@ -31,7 +31,7 @@ class Pagar extends CI_Controller{
 			),
 
 			'scripts' => array(
-
+				'vendor/mask/jquery.mask.min.js', 'vendor/mask/app.js',
 				'vendor/datatables/jquery.dataTables.min.js',
 				'vendor/datatables/dataTables.bootstrap4.min.js',
 				'vendor/datatables/app.js'
@@ -59,13 +59,10 @@ class Pagar extends CI_Controller{
 
 		} else {
 
-			$this->form_validation->set_rules('pagar_descricao','','trim|required|min_length[5]|max_length[145]|callback_check_pagar_descricao');
-			$this->form_validation->set_rules('pagar_unidade','unidade','trim|required|min_length[2]|max_length[5]');
-			$this->form_validation->set_rules('pagar_preco_custo','Preço de custo','trim|required|max_length[45]');
-			$this->form_validation->set_rules('pagar_preco_venda','Preço de venda','trim|required|max_length[45]|callback_check_pagar_preco_venda');
-			$this->form_validation->set_rules('pagar_estoque_minimo','Estoque Minimo','trim|greater_than_equal_to[0]');
-			$this->form_validation->set_rules('pagar_qtde_estoque','Quantidade Estoque','trim|required');
-			$this->form_validation->set_rules('pagar_obs','Estoque Minimo','trim|max_length[200]');
+			$this->form_validation->set_rules('conta_pagar_fornecedor_id','','required');
+			$this->form_validation->set_rules('conta_pagar_data_vencto','','required');
+			$this->form_validation->set_rules('conta_pagar_valor','','required');
+			$this->form_validation->set_rules('conta_pagar_obs','','max_length[145]');
 
 			if ($this->form_validation->run()) {
 
@@ -73,26 +70,25 @@ class Pagar extends CI_Controller{
 
 					array(
 
-						'pagar_codigo',
-						'pagar_categoria_id',
-						'pagar_marca_id',
-						'pagar_fornecedor_id',
-						'pagar_descricao',
-						'pagar_unidade',
-						'pagar_preco_custo',
-						'pagar_preco_venda',
-						'pagar_estoque_minimo',
-						'pagar_qtde_estoque',
-						'pagar_ativo',
-						'pagar_obs',
+						'conta_pagar_fornecedor_id',
+						'conta_pagar_data_vencto',
+						'conta_pagar_valor',
+						'conta_pagar_status',
+						'conta_pagar_obs',
+						
 
 					), $this->input->post()
 
 				);
+				$conta_pagar_status = $this->input->post('conta_pagar_status');
+
+				if ($conta_pagar_status == 1) {
+					$data['conta_pagar_data_pagamento'] == date('Y-m-d h:i:s');
+				}
 
 				$data = html_escape($data);
 				
-				$this->core_model->update('pagars', $data, array('pagar_id' => $pagar_id));
+				$this->core_model->update('contas_pagar', $data, array('conta_pagar_id' => $conta_pagar_id));
 
 				redirect('pagar');	
 
@@ -129,13 +125,10 @@ class Pagar extends CI_Controller{
 
 	public function add(){
 
-			$this->form_validation->set_rules('pagar_descricao','','trim|required|min_length[5]|max_length[145]|is_unique[pagars.pagar_descricao]');
-			$this->form_validation->set_rules('pagar_unidade','unidade','trim|required|min_length[2]|max_length[5]');
-			$this->form_validation->set_rules('pagar_preco_custo','Preço de custo','trim|required|max_length[45]');
-			$this->form_validation->set_rules('pagar_preco_venda','Preço de venda','trim|required|max_length[45]|callback_check_pagar_preco_venda');
-			$this->form_validation->set_rules('pagar_estoque_minimo','Estoque Minimo','trim|required|greater_than_equal_to[0]');
-			$this->form_validation->set_rules('pagar_qtde_estoque','Quantidade Estoque','trim|required');
-			$this->form_validation->set_rules('pagar_obs','Estoque Minimo','trim|max_length[200]');
+		$this->form_validation->set_rules('conta_pagar_fornecedor_id','','required');
+			$this->form_validation->set_rules('conta_pagar_data_vencto','','required');
+			$this->form_validation->set_rules('conta_pagar_valor','','required');
+			$this->form_validation->set_rules('conta_pagar_obs','','max_length[145]');
 
 			if ($this->form_validation->run()) {
 
@@ -143,117 +136,72 @@ class Pagar extends CI_Controller{
 
 					array(
 
-						'pagar_codigo',
-						'pagar_categoria_id',
-						'pagar_marca_id',
-						'pagar_fornecedor_id',
-						'pagar_descricao',
-						'pagar_unidade',
-						'pagar_preco_custo',
-						'pagar_preco_venda',
-						'pagar_estoque_minimo',
-						'pagar_qtde_estoque',
-						'pagar_ativo',
-						'pagar_obs',
+						'conta_pagar_fornecedor_id',
+						'conta_pagar_data_vencto',
+						'conta_pagar_valor',
+						'conta_pagar_status',
+						'conta_pagar_obs',
+						
 
 					), $this->input->post()
 
 				);
+				$conta_pagar_status = $this->input->post('conta_pagar_status');
+
+				if ($conta_pagar_status == 1) {
+					$data['conta_pagar_data_pagamento'] == date('Y-m-d h:i:s');
+				}
 
 				$data = html_escape($data);
-
-				$this->core_model->insert('pagars', $data);
-
-
-				$this->session->set_flashdata('sucesso', 'pagar salvo com sucesso');
-				redirect('pagars');
-
 				
+				$this->core_model->insert('contas_pagar', $data);
+
+				redirect('pagar');	
+
 			} else {
 
 				$data = array(
 
-					'titulo' => 'Cadastrar pagar', 
+					'titulo' => 'Cadastrar Pagamentos', 
 
-					'scripts' => array('vendor/mask/jquery.mask.min.js',
-						'vendor/mask/app.js',
-						'js/pagars.js'),
+					'styles' => array('vendor/select2/select2.min.css'),
 
-					'pagar_codigo' => $this->core_model->generate_unique_code('pagars', 'numeric', 8, 'pagar_codigo'), 
-
-					'marcas' => $this->core_model->get_all('marcas'), 
-
-					'categorias' => $this->core_model->get_all('categorias'),
+					'scripts' => array('vendor/select2/select2.min.js', 'vendor/select2/app.js'),
 
 					'fornecedores' => $this->core_model->get_all('fornecedores'),
-					
+
 				);
-
-
 
 				$this->load->view('layout/header', $data);
 
-				$this->load->view('pagars/add');
+				$this->load->view('pagar/add');
 
 				$this->load->view('layout/footer');
 
 
-			}
-			
-	}
-
-	public function del($pagar_id = NULL){
-
-			if (!$pagar_id || !$this->core_model->get_by_id('pagars', array('pagar_id' => $pagar_id))) {
-
-				$this->session->set_flashdata('error', 'pagar não Encontrado');
-
-				redirect('pagars');
-				
-			} else {
-				$this->core_model->delete('pagars', array('pagar_id' => $pagar_id));
-				$this->session->set_flashdata('sucesso', 'pagar excluido com sucesso');
-				redirect('pagars');
-			}
-
-	}
-
-	public function check_pagar_descricao($pagar_descrica){
-		$pagar_id = $this->input->post('pagar_id');
-
-		if($this->core_model->get_by_id('pagars', array('pagar_descricao' => $pagar_descrica, 'pagar_id != ' => $pagar_id))){
-			$this->form_validation->set_message('check_pagar_descricao', 'Este pagar já existe');
-			return FALSE;
-		} else {
-			return TRUE;
 		}
 
 	}
 
-	public function check_pagar_preco_venda($pagar_preco_venda){
+	public function del($conta_pagar_id = NULL){
 
-		$pagar_preco_custo = $this->input->post('pagar_preco_custo');
+		if (!$conta_pagar_id || !$this->core_model->get_by_id('contas_pagar', array('conta_pagar_id' => $conta_pagar_id))) {
 
+			$this->session->set_flashdata('error', 'Conta não Encontrada');
 
-		$pagar_preco_custo = str_replace('.', '', $pagar_preco_custo);
-		$pagar_preco_venda = str_replace('.', '', $pagar_preco_venda);
-		$pagar_preco_custo = str_replace(',', '', $pagar_preco_custo);
-		$pagar_preco_venda = str_replace(',', '', $pagar_preco_venda);
-
-		if($pagar_preco_custo > $pagar_preco_venda){
-
-			$this->form_validation->set_message('check_pagar_preco_venda', 'Preço de venda deve ser maior');
-
-			return FALSE;
-
+			redirect('pagar');
 
 		} else {
-			return TRUE;
+			$this->core_model->delete('contas_pagar', array('conta_pagar_id' => $conta_pagar_id));
+			$this->session->set_flashdata('sucesso', 'Conta excluida com sucesso');
+			redirect('pagar');
 		}
 
 	}
+
+
 
 }
 
 
-	?>
+?>

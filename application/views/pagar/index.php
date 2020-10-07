@@ -106,7 +106,7 @@
                       <div class="modal-body">Para excluir o registro clique em "SIM"</div>
                       <div class="modal-footer">
                         <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Não</button>
-                        <a class="btn btn-primary btn-sm" href="<?php echo base_url('pagar/del/'.$pagar->conta_pagar_id); ?>">Sim</a>
+                        <a class="btn btn-primary btn-sm" href="<?php echo base_url('pagar/del/'.$conta->conta_pagar_id); ?>">Sim</a>
                       </div>
                     </div>
                   </div>

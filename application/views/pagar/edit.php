@@ -28,45 +28,50 @@
             <div class="form-group row">
               <div class="col-md-3">
                <label>Fornecedores:</label>
-               <select class="form-control contas_pagar" name="conta_pagar_fornecedor_id">
+               <select class="form-control" name="conta_pagar_fornecedor_id">
                 <?php foreach ($fornecedores as $fornecedor): ?>
                   <option value="<?php echo $fornecedor->fornecedor_id ?>" <?php echo ($fornecedor->fornecedor_id == $conta_pagar->conta_pagar_fornecedor_id ? 'selected' : '') ?> title="<?php echo ($fornecedor->fornecedor_ativo == 0 ? 'Não pode ser escolhido' : 'Fornecedor Ativo'); ?>" <?php echo ($fornecedor->fornecedor_ativo == 0 ? 'disabled' : '') ?>><?php echo ($fornecedor->fornecedor_ativo == 0 ? $fornecedor->fornecedor_nome_fantasia . '&nbsp;->&nbsp;Inativa' : $fornecedor->fornecedor_nome_fantasia) ?></option>
                 <?php endforeach; ?>
+                <?php echo form_error('conta_pagar_fornecedor_id', '<small class="form-text text-danger">','</small>'); ?>
               </select>
             </div>
+
             <div class="col-md-3">
-              <label>pagar Unidade:</label>
-              <input type="text" class="form-control" name="pagar_unidade" placeholder="pagar Unidade" value="<?php echo $conta_pagar->conta_pagar_unidade; ?>">
-              <?php echo form_error('pagar_unidade', '<small class="form-text text-danger">','</small>'); ?>
+              <label>Data de Vencimento:</label>
+              <input type="date" class="form-control" name="conta_pagar_data_vencto" placeholder="Data de Vencimento" value="<?php echo $conta_pagar->conta_pagar_data_vencto; ?>">
+              <?php echo form_error('conta_pagar_data_vencto', '<small class="form-text text-danger">','</small>'); ?>
             </div>
-          </div>
-        </fieldset>
 
-        <fieldset class="mt-4 border p-2">
-          <legend class="font-small"><i class="fas fa-funnel-dollar"></i>&nbsp;Precificação e Estoque</legend>
-          <div class="form-group row">
-           <div class="form-group row">
-            <div class="col-md-4">
-              <label>pagar Ativo:</label>
-              <select name="pagar_ativo" class="form-control">
-                <option value="0" <?php echo ($conta_pagar->conta_pagar_ativo == 0 ? 'selected' : ''); ?>>Não</option>
-                <option value="1" <?php echo ($conta_pagar->conta_pagar_ativo == 1 ? 'selected' : ''); ?>>Sim</option>
+            <div class="col-md-3">
+              <label>Valor da Conta:</label>
+              <input type="text" class="form-control money2" name="conta_pagar_valor" placeholder="Valor da Conta" value="<?php echo $conta_pagar->conta_pagar_valor; ?>">
+              <?php echo form_error('conta_pagar_valor', '<small class="form-text text-danger">','</small>'); ?>
+            </div>
+
+             <div class="col-md-3">
+              <label>Situação:</label>
+              <select name="conta_pagar_status" class="form-control">
+                <option value="0" <?php echo ($conta_pagar->conta_pagar_status == 0 ? 'selected' : ''); ?>>Pendente</option>
+                <option value="1" <?php echo ($conta_pagar->conta_pagar_status == 1 ? 'selected' : ''); ?>>Paga</option>
               </select>
             </div>
-            <div class="col-md-8">
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
               <label>Observações:</label>
-              <textarea class="form-control" name="cliente_obs" placeholder="Observações:" value=""><?php echo $conta_pagar->conta_pagar_obs; ?></textarea>
-              <?php echo form_error('cliente_obs', '<small class="form-text text-danger">','</small>'); ?>
+              <textarea class="form-control" name="conta_pagar_obs" placeholder="Observações:" value=""><?php echo $conta_pagar->conta_pagar_obs; ?></textarea>
+              <?php echo form_error('conta_pagar_obs', '<small class="form-text text-danger">','</small>'); ?>
             </div>
           </div>
         </fieldset>
-
+          
         <div class="form-group row">
           <input type="hidden" name="pagar_id" value="<?php echo $conta_pagar->conta_pagar_id ?>">
         </div>
 
+  
+          <button type="submit" class="btn btn-primary btn-sm" <?php echo ($conta_pagar->conta_pagar_status == 1 ? 'disabled' : '') ?>><?php echo ($conta_pagar->conta_pagar_status == 1 ? 'Conta Paga' : 'Salvar') ?></button>
 
-        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
         <a href="<?php echo base_url('pagar'); ?>" class="btn btn-success btn-sm ml-2"><i class="fas fa-arrow-left"></i>&nbsp;Voltar</a>
       </form>
     </div>

@@ -183,11 +183,11 @@ class Produtos extends CI_Controller{
 
 					'produto_codigo' => $this->core_model->generate_unique_code('produtos', 'numeric', 8, 'produto_codigo'), 
 
-					'marcas' => $this->core_model->get_all('marcas'), 
+					'marcas' => $this->core_model->get_all('marcas', array('marca_ativa' => 1)), 
 
-					'categorias' => $this->core_model->get_all('categorias'),
+					'categorias' => $this->core_model->get_all('categorias', array('categoria_ativa' => 1)),
 
-					'fornecedores' => $this->core_model->get_all('fornecedores'),
+					'fornecedores' => $this->core_model->get_all('fornecedores', array('fornecedor_ativo' => 1) ),
 					
 				);
 
