@@ -59,6 +59,7 @@
         <h6 class="collapse-header">Escolha uma opção:</h6>
         <a class="collapse-item" href="<?php echo base_url('pagar'); ?>"><i class="fas fa-money-bill-alt text-gray-900"></i>&nbsp;&nbsp;&nbsp;Contas a Pagar </a>
         <a class="collapse-item" href="<?php echo base_url('receber'); ?>"><i class="fas fa-hand-holding-usd text-gray-900"></i>&nbsp;&nbsp;&nbsp;Contas a Receber </a>
+        <a class="collapse-item" href="<?php echo base_url('formas_pagamentos'); ?>"><i class="fas fa-money-check-alt text-gray-900"></i>&nbsp;&nbsp;&nbsp;Formas de Pagamento</a>
       </div>
     </div>
   </li>
