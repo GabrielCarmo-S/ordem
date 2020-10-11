@@ -128,10 +128,7 @@ class Formas_pagamentos extends CI_Controller{
 
 	public function add(){
 
-		$this->form_validation->set_rules('forma_pagamento_cliente_id','','required');
-		$this->form_validation->set_rules('forma_pagamento_data_vencto','','required');
-		$this->form_validation->set_rules('forma_pagamento_valor','','required');
-		$this->form_validation->set_rules('forma_pagamento_obs','','max_length[145]');
+		$this->form_validation->set_rules('forma_pagamento_nome','','trim|required|min_length[4]|max_length[45]|is_unique[formas_pagamentos.forma_pagamento_nome]');
 
 		if ($this->form_validation->run()) {
 
@@ -139,46 +136,33 @@ class Formas_pagamentos extends CI_Controller{
 
 				array(
 
-					'forma_pagamento_cliente_id',
-					'forma_pagamento_data_vencto',
-					'forma_pagamento_valor',
-					'forma_pagamento_status',
-					'forma_pagamento_obs',
+					'forma_pagamento_nome',
+					'forma_pagamento_ativa',
+					'forma_pagamento_aceita_parc',
 
 
 				), $this->input->post()
 
 			);
-			$forma_pagamento_status = $this->input->post('forma_pagamento_status');
-
-			if ($forma_pagamento_status == 1) {
-				$data['forma_pagamento_data_pagamento'] == date('Y-m-d h:i:s');
-			}
-
 
 			$data = html_escape($data);
 
 			$this->core_model->insert('formas_pagamentos', $data);
 
-			redirect('receber');	
+			redirect('modulo');	
 
 		} else {
 
 			$data = array(
 
-				'titulo' => 'Atualizar Pagamentos', 
+				'titulo' => 'Cadastrar Pagamentos', 
 
-				'styles' => array('vendor/select2/select2.min.css'),
-
-				'scripts' => array('vendor/select2/select2.min.js', 'vendor/select2/app.js'),
-
-				'clientes' => $this->core_model->get_all('clientes'),
 
 			);
 
 			$this->load->view('layout/header', $data);
 
-			$this->load->view('receber/add');
+			$this->load->view('formas_pagamentos/add');
 
 			$this->load->view('layout/footer');
 
@@ -190,15 +174,25 @@ class Formas_pagamentos extends CI_Controller{
 
 		if (!$forma_pagamento_id || !$this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id))) {
 
-			$this->session->set_flashdata('error', 'Conta não Encontrada');
+			$this->session->set_flashdata('error', 'Forma de pagamento não Encontrada');
 
-			redirect('receber');
+			redirect('modulo');
 
-		} else {
-			$this->core_model->delete('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id));
-			$this->session->set_flashdata('sucesso', 'Conta excluida com sucesso');
-			redirect('receber');
+		} 
+
+		if ($this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id, 'forma_pagamento_ativa' => 1))) {
+
+			$this->session->set_flashdata('info', 'Não é possivel excluir uma forma de pagamento ativa');
+
+			redirect('modulo');
+
 		}
+
+
+		$this->core_model->delete('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id));
+		$this->session->set_flashdata('sucesso', 'Conta excluida com sucesso');
+		redirect('modulo');
+		
 
 	}
 
