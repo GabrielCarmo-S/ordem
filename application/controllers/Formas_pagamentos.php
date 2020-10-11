@@ -53,44 +53,52 @@ class Formas_pagamentos extends CI_Controller{
 		if (!$forma_pagamento_id || !$this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id))) {
 
 			$this->session->set_flashdata('error', 'Pagamentos não encontrados');
-			redirect('receber');
+			redirect('modulo');
 
 		} else {
 
-			$this->form_validation->set_rules('forma_pagamento_cliente_id','','required');
-			$this->form_validation->set_rules('forma_pagamento_data_vencto','','required');
-			$this->form_validation->set_rules('forma_pagamento_valor','','required');
-			$this->form_validation->set_rules('forma_pagamento_obs','','max_length[145]');
+			$this->form_validation->set_rules('forma_pagamento_nome','','trim|required|min_length[4]|max_length[45]|callback_check_pagamento_nome');
+			$this->form_validation->set_rules('forma_pagamento_ativa','','required');
+			$this->form_validation->set_rules('forma_pagamento_aceita_parc','','max_length[145]');
 
 			if ($this->form_validation->run()) {
+
+				$forma_pagamento_ativa = $this->input->post('forma_pagamento_ativa');
+
+				if ($this->db->table_exists('vendas')) {
+
+					if ($forma_pagamento_ativa == 0 && $this->core_model('vendas', array('venda_forma_pagamento_id' => $forma_pagamento_id, 'venda_status' =>0))){
+						$this->sesion->set_flashdata('info', 'Forma de pagmento não pode ser desativada, pois está sendo utilizada em Vendas');
+						redirect('modulo');
+					}
+				}
+
+				if ($this->db->table_exists('ordem_servicos')) {
+
+					if ($forma_pagamento_ativa == 0 && $this->core_model('ordem_servicos', array('ordem_servico_forma_pagamento_id' => $forma_pagamento_id, 'ordem_servico_status' =>0))){
+						$this->sesion->set_flashdata('info', 'Forma de pagmento não pode ser desativada, pois está sendo utilizada em Servico');
+						redirect('modulo');
+					}
+				}
 
 				$data = elements(
 
 					array(
 
-						'forma_pagamento_cliente_id',
-						'forma_pagamento_data_vencto',
-						'forma_pagamento_valor',
-						'forma_pagamento_status',
-						'forma_pagamento_obs',
+						'forma_pagamento_nome',
+						'forma_pagamento_ativa',
+						'forma_pagamento_aceita_parc',
 						
 
 					), $this->input->post()
 
 				);
-				$forma_pagamento_status = $this->input->post('forma_pagamento_status');
-
-				if ($forma_pagamento_status == 1) {
-					$data['forma_pagamento_data_pagamento'] == date('Y-m-d h:i:s');
-				}
-
-
 
 				$data = html_escape($data);
 				
 				$this->core_model->update('formas_pagamentos', $data, array('forma_pagamento_id' => $forma_pagamento_id));
 
-				redirect('receber');	
+				redirect('modulo');	
 
 			} else {
 
@@ -98,19 +106,14 @@ class Formas_pagamentos extends CI_Controller{
 
 					'titulo' => 'Atualizar Pagamentos', 
 
-					'styles' => array('vendor/select2/select2.min.css'),
-
-					'scripts' => array('vendor/select2/select2.min.js', 'vendor/select2/app.js'),
-
 					'forma_pagamento' => $this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id)), 
 
-					'clientes' => $this->core_model->get_all('clientes'),
 
 				);
 
 				$this->load->view('layout/header', $data);
 
-				$this->load->view('receber/edit');
+				$this->load->view('formas_pagamentos/edit');
 
 				$this->load->view('layout/footer');
 
@@ -126,60 +129,60 @@ class Formas_pagamentos extends CI_Controller{
 	public function add(){
 
 		$this->form_validation->set_rules('forma_pagamento_cliente_id','','required');
-			$this->form_validation->set_rules('forma_pagamento_data_vencto','','required');
-			$this->form_validation->set_rules('forma_pagamento_valor','','required');
-			$this->form_validation->set_rules('forma_pagamento_obs','','max_length[145]');
+		$this->form_validation->set_rules('forma_pagamento_data_vencto','','required');
+		$this->form_validation->set_rules('forma_pagamento_valor','','required');
+		$this->form_validation->set_rules('forma_pagamento_obs','','max_length[145]');
 
-			if ($this->form_validation->run()) {
+		if ($this->form_validation->run()) {
 
-				$data = elements(
+			$data = elements(
 
-					array(
+				array(
 
-						'forma_pagamento_cliente_id',
-						'forma_pagamento_data_vencto',
-						'forma_pagamento_valor',
-						'forma_pagamento_status',
-						'forma_pagamento_obs',
-						
-
-					), $this->input->post()
-
-				);
-				$forma_pagamento_status = $this->input->post('forma_pagamento_status');
-
-				if ($forma_pagamento_status == 1) {
-					$data['forma_pagamento_data_pagamento'] == date('Y-m-d h:i:s');
-				}
+					'forma_pagamento_cliente_id',
+					'forma_pagamento_data_vencto',
+					'forma_pagamento_valor',
+					'forma_pagamento_status',
+					'forma_pagamento_obs',
 
 
-				$data = html_escape($data);
-				
-				$this->core_model->insert('formas_pagamentos', $data);
+				), $this->input->post()
 
-				redirect('receber');	
+			);
+			$forma_pagamento_status = $this->input->post('forma_pagamento_status');
 
-			} else {
+			if ($forma_pagamento_status == 1) {
+				$data['forma_pagamento_data_pagamento'] == date('Y-m-d h:i:s');
+			}
 
-				$data = array(
 
-					'titulo' => 'Atualizar Pagamentos', 
+			$data = html_escape($data);
 
-					'styles' => array('vendor/select2/select2.min.css'),
+			$this->core_model->insert('formas_pagamentos', $data);
 
-					'scripts' => array('vendor/select2/select2.min.js', 'vendor/select2/app.js'),
+			redirect('receber');	
 
-					'clientes' => $this->core_model->get_all('clientes'),
+		} else {
 
-				);
+			$data = array(
 
-				$this->load->view('layout/header', $data);
+				'titulo' => 'Atualizar Pagamentos', 
 
-				$this->load->view('receber/add');
+				'styles' => array('vendor/select2/select2.min.css'),
 
-				$this->load->view('layout/footer');
+				'scripts' => array('vendor/select2/select2.min.js', 'vendor/select2/app.js'),
 
-			}	
+				'clientes' => $this->core_model->get_all('clientes'),
+
+			);
+
+			$this->load->view('layout/header', $data);
+
+			$this->load->view('receber/add');
+
+			$this->load->view('layout/footer');
+
+		}	
 
 	}
 
@@ -195,6 +198,22 @@ class Formas_pagamentos extends CI_Controller{
 			$this->core_model->delete('formas_pagamentos', array('forma_pagamento_id' => $forma_pagamento_id));
 			$this->session->set_flashdata('sucesso', 'Conta excluida com sucesso');
 			redirect('receber');
+		}
+
+	}
+
+	public function check_pagamento_nome($forma_pagamento_nome){
+
+		$forma_pagamento_id = $this->input->post('forma_pagamento_id');
+
+		if($this->core_model->get_by_id('formas_pagamentos', array('forma_pagamento_nome' => $forma_pagamento_nome, 'forma_pagamento_id !=' => $forma_pagamento_id))){
+
+			$this->form_validation->set_message('check_pagamento_nome', 'Essa forma de pagamento já existe');
+
+			return FALSE;
+
+		} else {
+			return TRUE;
 		}
 
 	}
