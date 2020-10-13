@@ -88,8 +88,7 @@ class Ajax extends CI_Controller{
 
 						'id' => $row->servico_id,
 						'value' => $row->servico_descricao,
-						'produto_preco_venda' => $row->servico_preco_venda,
-						'produto_qtde_estoque' => $row->servico_qtde_estoque,
+						'servico_preco' => $row->servico_preco,
 					);
 				}
 
